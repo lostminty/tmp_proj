@@ -22,6 +22,7 @@ else:
 
 if __name__ == '__main__':
 
+    dir =sys.argv[1]
     # 1. Download a video clip dataset. Find more dataset at https://pytorchvideo.readthedocs.io/en/latest/data.html
     #download_data("https://pl-flash-data.s3.amazonaws.com/kinetics.zip")
 
@@ -59,9 +60,9 @@ if __name__ == '__main__':
 
     # 3. Load the data from directories.
     datamodule = VideoClassificationData.from_folders(
-    	train_folder="/home/lost/makea/train",
-    	val_folder="/home/lost/makea/val",
-        predict_folder="/home/lost/makea/test",
+    	train_folder=f"{dir}/train",
+    	val_folder=f"{dir}/val",
+        predict_folder=f"{dir}/test",
         train_transform=make_transform(train_post_tensor_transform),
         val_transform=make_transform(val_post_tensor_transform),
         predict_transform=make_transform(val_post_tensor_transform),
@@ -91,7 +92,7 @@ if __name__ == '__main__':
     trainer.save_checkpoint("video_classification.pt")
 
     # 7. Make a prediction
-    predictions = model.predict(os.path.join(os.getcwd(),"makea/test"))
+    predictions = model.predict(os.path.join(os.getcwd(),f"{dir}/test"))
     print(predictions)
     # ['marching', 'flying_kite', 'archery', 'high_jump', 'bowling']
 
